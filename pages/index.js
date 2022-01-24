@@ -5,11 +5,10 @@ function HomePage() {
   return (
     <div>
       <GlobalStyles />
-      <h1>Boas vindas de volta!</h1>
+      <h1 tag="h2">Boas vindas de volta!</h1>
       <h2>Discord - Alura Matrix</h2>
     </div>
   );
 };
-
 
 export default HomePage
