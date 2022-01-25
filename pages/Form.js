@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS, WEIGHTS } from './constants'
 import Spacer from './Spacer'
 import GlobalStyles from './GlobalStyles.js'
 
-function Form() {
+function Form({ parentCallback }) {
+  const [userName, setUserName] = useState('');
+
+  const onChangeHandler = (event) => {
+    setUserName(event.target.value);
+  };
+
+  // Enviando dados ao parent
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      parentCallback(userName);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [userName]);
+
   return (
     <Wrapper>
       <TextWrapper>
@@ -14,7 +28,7 @@ function Form() {
       <Spacer size={34} />
       <FormWrapper action="">
         <label htmlFor="usuario">Usuário do Github</label>
-        <input type="text" id='usuario' />
+        <input type="text" id='usuario' value={userName} onChange={onChangeHandler} />
       </FormWrapper>
       <Spacer size={12} />
       <Button>Entrar</Button>
@@ -69,6 +83,7 @@ const FormWrapper = styled.form`
       border: 1px solid black;
       border-radius: 2px;
       height: 32px;
+      padding: 10px;
       color: ${COLORS.gray[300]};
       font-size: 1rem;
     }

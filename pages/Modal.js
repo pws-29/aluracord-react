@@ -1,16 +1,22 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useState } from 'react';
 import { COLORS } from './constants'
 
 import Form from './Form';
 import User from './User';
 
 function Modal() {
+  const [userName, setUsername] = useState('');
+
+  const handleCallback = (userName) => {
+    setUsername(userName);
+  };
+
   return (
     <>
       <Wrapper>
-        <Form></Form>
-        <User></User>
+        <Form parentCallback={handleCallback}></Form>
+        <User userName={userName}></User>
       </Wrapper>
     </>
   );

@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLORS, WEIGHTS } from './constants';
 
-function User() {
+function User({ userName }) {
   return (
     <Wrapper>
       <Card>
-        <img src="https://github.com/wspietro.png" alt="imagem" />
-        <p>Nome Usuário</p>
+        <img src={`https://github.com/${userName}.png`} alt="imagem" />
+        <p>{userName}</p>
       </Card>
     </Wrapper>
   );
