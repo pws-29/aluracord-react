@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { COLORS, WEIGHTS } from './constants'
-import Spacer from './Spacer'
-import GlobalStyles from './GlobalStyles.js'
+import { COLORS, WEIGHTS } from './constants';
+import Spacer from './Spacer';
+// Roteamento gerenciado pelo next
+import { useRouter } from 'next/router';
 
 function Form({ parentCallback }) {
   const [userName, setUserName] = useState('');
+  const router = useRouter();
 
   const onChangeHandler = (event) => {
     setUserName(event.target.value);
   };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    // TODO: pq está tendo refresh?
+    router.push('/chat')
+  }
 
   // Enviando dados ao parent
   useEffect(() => {
@@ -26,12 +34,12 @@ function Form({ parentCallback }) {
         <SubTitle>Estamos muito animados em te ver novamente!</SubTitle>
       </TextWrapper>
       <Spacer size={34} />
-      <FormWrapper action="">
+      <FormWrapper action="" onSubmit={handleSubmit}>
         <label htmlFor="usuario">Usuário do Github</label>
         <input type="text" id='usuario' value={userName} onChange={onChangeHandler} />
+        <Spacer size={12} />
+        <Button>Entrar</Button>
       </FormWrapper>
-      <Spacer size={12} />
-      <Button>Entrar</Button>
     </Wrapper>
   );
 }
