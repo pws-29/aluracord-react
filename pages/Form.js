@@ -37,7 +37,7 @@ function Form({ parentCallback }) {
       <FormWrapper action="" onSubmit={handleSubmit}>
         <label htmlFor="usuario">Usuário do Github</label>
         <input type="text" id='usuario' value={userName} onChange={onChangeHandler} />
-        <Spacer size={12} />
+        <Spacer size={1} />
         <Button>Entrar</Button>
       </FormWrapper>
     </Wrapper>
@@ -80,7 +80,7 @@ const FormWrapper = styled.form`
   width: 100%;
 
     label {
-      color: ${COLORS.gray[300]};
+      color: ${COLORS.gray[500]};
       font-weight: ${WEIGHTS.normal};
       font-size: 0.85rem;
       text-transform: uppercase;
