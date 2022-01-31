@@ -20,7 +20,7 @@ function MessageBoxWrapper() {
     let objetoMensagem = {};
     objetoMensagem = {
       mensagem,
-      usuário: 'usuário', // todo
+      usuario: 'usuário', // todo
       id: uuidv4()
     };
 
