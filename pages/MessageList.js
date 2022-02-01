@@ -32,16 +32,6 @@ function MessageList({ listaMensagens }) {
         )
       })
       }
-
-      {/* {
-        listaMensagens.map(objetoMensagemAtual => {
-          return (
-            <li key={objetoMensagemAtual.id}>
-              {objetoMensagemAtual.mensagem}
-            </li>
-          )
-        })
-      } */}
     </Wrapper>
   );
 }

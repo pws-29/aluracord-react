@@ -6,6 +6,24 @@ import MessageList from './MessageList';
 
 import { v4 as uuidv4 } from 'uuid'
 
+
+import { createClient } from '@supabase/supabase-js'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzcyMDgwMSwiZXhwIjoxOTU5Mjk2ODAxfQ.YS8qUYJ_RmQ5NT3Z-RzuXTlEKgeIBI4gqTRh5hbdTCo'
+const SUPABASE_URL = 'https://xxkzzdvxgsaznvlwicmx.supabase.co'
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Fetch feito pelo supabase
+const dadosSupaBase = supabaseClient
+  .from('mensagens')
+  .select('*')
+  .then((dados) => {
+    // Retorna body, count, dados cadastrados e status
+    console.log("Dados da consulta:", dados);
+  })
+
+console.log(dadosSupaBase);
+
 function MessageBoxWrapper() {
   const [mensagem, setMensagem] = useState('');
   const [listaMensagens, setListaMensagens] = useState([]);
@@ -28,6 +46,7 @@ function MessageBoxWrapper() {
       event.preventDefault(); // evitar qubra de linha;
       setListaMensagens(prevState => [objetoMensagem, ...prevState]);
       setMensagem(''); // limpar textfield
+      console.log(objetoMensagem.id);
     };
   };
 
