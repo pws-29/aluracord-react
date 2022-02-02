@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react/cjs/react.development';
 import styled from 'styled-components';
 import { COLORS } from './constants';
 import MessageList from './MessageList';
@@ -13,20 +13,21 @@ const SUPABASE_URL = 'https://xxkzzdvxgsaznvlwicmx.supabase.co'
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Fetch feito pelo supabase
-const dadosSupaBase = supabaseClient
-  .from('mensagens')
-  .select('*')
-  .then((dados) => {
-    // Retorna body, count, dados cadastrados e status
-    console.log("Dados da consulta:", dados);
-  })
-
-console.log(dadosSupaBase);
-
 function MessageBoxWrapper() {
   const [mensagem, setMensagem] = useState('');
   const [listaMensagens, setListaMensagens] = useState([]);
+
+  useEffect(() => {
+    // Fetch feito pelo supabase
+    supabaseClient
+      .from('mensagens')
+      .select('*')
+      .order('created_at', { ascending: false }) // organizar mensagens em ordem de envio
+      .then(({ data }) => {
+        // Retorna body, count, dados cadastrados e status
+        setListaMensagens(data)
+      });
+  }, []);
 
   const handleChangeMessage = (event) => {
     const targetValue = event.target.value
@@ -37,16 +38,22 @@ function MessageBoxWrapper() {
     // Criando objeto da mensagem;
     let objetoMensagem = {};
     objetoMensagem = {
-      mensagem,
       usuario: 'usuário', // todo
+      mensagem,
       id: uuidv4()
     };
 
     if (event.key === 'Enter') {
       event.preventDefault(); // evitar qubra de linha;
-      setListaMensagens(prevState => [objetoMensagem, ...prevState]);
+      supabaseClient
+        .from('mensagens')
+        .insert([
+          objetoMensagem
+        ])
+        .then(({ data }) => {
+          setListaMensagens(prevState => [data[0], ...prevState]);
+        });
       setMensagem(''); // limpar textfield
-      console.log(objetoMensagem.id);
     };
   };
 
